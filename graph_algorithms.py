@@ -174,7 +174,7 @@ class DepthFirstSearch():
 """Breadth First Search (BFS):
 1. graphs must be bi-directional (undirectional);
 2. the edges must be unweighted (weight = 1);
-3. will find optimal path form a given node to another, specified node;
+3. will find optimal path form a given node to another, specified end node;
 4. time complexity of Breadth First Search algorithm is O( N + E )
 usage: BreadthFirstSearch(NODES, EDGES, start_node, end_node).findPath()
 """
@@ -235,17 +235,18 @@ class BreadthFirstSearch():
         print('path =:', reconstructed_path)
         return reconstructed_path
 
-dijkstra(NODES, EDGES, 5)
+if __name__ == "__main__":
+    dijkstra(NODES, EDGES, 5)
 # algorithm =: Dijkstra's
 # source =: 5
 # path_ways =: {0: [5, 3, 1, 0], 1: [5, 3, 1], 2: [5, 3, 1, 0, 2], 3: [5, 3], 4: [5, 3, 1, 4], 5: [5], 6: [], 7: [], 8: []}
 # prev_nodes=: {0: 1, 1: 3, 2: 0, 3: 5, 4: 1, 5: None, 6: None, 7: None, 8: None}
 # path_lens =: {0: 2.5, 1: 1.5, 2: 4.0, 3: 1.0, 4: 4.0, 5: 0, 6: inf, 7: inf, 8: inf}
-bellman_ford(NODES, EDGES, 5)
+    bellman_ford(NODES, EDGES, 5)
 
-DepthFirstSearch(NODES, EDGES).findComponents()
+    DepthFirstSearch(NODES, EDGES).findComponents()
 
-BreadthFirstSearch(NODES, EDGES, 5, 0).findPath()
+    BreadthFirstSearch(NODES, EDGES, 5, 0).findPath()
 # [
 # [
 # [
