@@ -29,7 +29,7 @@ EDGES = {
 5. time complexity of Dijkstra's algorithm is O(
 usage: dijkstra(NODES, EDGES, start_node)
 """
-def dijkstra(nodes, edges, source):
+def dijkstra(nodes, edges, source, show=False):
     path_way = {v: [] for v in nodes}
     # path_way[source].append(source)
     prev_nodes = {v: None for v in nodes}
@@ -66,12 +66,13 @@ def dijkstra(nodes, edges, source):
         if path_way[e_node][0] != source: # check that we can reach the source
             path_way[e_node] = []
 
-    print('\n')
-    print('algorithm =:', 'Dijkstra\'s')
-    print('source =:', source)
-    print('path_ways =:', path_way)
-    print('prev_nodes=:', prev_nodes)
-    print('path_lens =:', path_len)
+    if show:
+        print('\n')
+        print('algorithm =:', 'Dijkstra\'s')
+        print('source =:', source)
+        print('path_ways =:', path_way)
+        print('prev_nodes=:', prev_nodes)
+        print('path_lens =:', path_len)
     return {'source': source, 'path_way': path_way, 'prev_nodes': prev_nodes, 'path_len': path_len}
 
 """ Bellman-Ford:
@@ -83,7 +84,7 @@ def dijkstra(nodes, edges, source):
 5. time complexity of Bellman-Ford algorithm is O( N ⋅ E )
 usage: bellman_ford(NODES, EDGES, start_node)
 """
-def bellman_ford(nodes, edges, source):
+def bellman_ford(nodes, edges, source, show=False):
     path_way = {v: [] for v in nodes}
     prev_nodes = {v: None for v in nodes}
     path_len = {v: float('inf') for v in nodes}
@@ -114,12 +115,13 @@ def bellman_ford(nodes, edges, source):
         if path_way[e_node][0] != source: # check that we can reach the source
             path_way[e_node] = []
 
-    print('\n')
-    print('algorithm =:', 'Bellman-Ford')
-    print('source =:', source)
-    print('path_ways =:', path_way)
-    print('prev_nodes=:', prev_nodes)
-    print('path_lens =:', path_len)
+    if show:
+        print('\n')
+        print('algorithm =:', 'Bellman-Ford')
+        print('source =:', source)
+        print('path_ways =:', path_way)
+        print('prev_nodes=:', prev_nodes)
+        print('path_lens =:', path_len)
     return {'source': source, 'path_way': path_way, 'prev_nodes': prev_nodes, 'path_len': path_len}
 
 """Depth First Search (DFS):
@@ -131,7 +133,8 @@ usage: DepthFirstSearch(NODES, EDGES).findComponents()
 # since, the method findComponents works correctly only when there are
 # no directions, the edges are normalized to become bi-directional (weight = 1)
 class DepthFirstSearch():
-    def __init__(self, nodes, edges):
+    def __init__(self, nodes, edges, show=False):
+        self.show = show
         self.nodes = nodes
         self.edges = self.normalizeEdges(nodes, edges)
         # self.source = source
@@ -157,10 +160,11 @@ class DepthFirstSearch():
                 self.dfs(v)
 
         count = self.index + 1
-        print('\n')
-        print('algorithm =:','Depth First Search')
-        print('count =:', count)
-        print('components =:', self.components)
+        if self.show:
+            print('\n')
+            print('algorithm =:','Depth First Search')
+            print('count =:', count)
+            print('components =:', self.components)
         return {'count': count, 'components': self.components}
 
     def dfs(self, v):
@@ -181,7 +185,8 @@ usage: BreadthFirstSearch(NODES, EDGES, start_node, end_node).findPath()
 # BFS works correctly only when there is no directions, and edges have no weigth;
 # thus, edges are normalized to become bi-directional and have weight = 1
 class BreadthFirstSearch():
-    def __init__(self, nodes, edges, source, sink):
+    def __init__(self, nodes, edges, source, sink, show=False):
+        self.show = show
         self.nodes = nodes
         self.edges = self.normalizeEdges(nodes, edges)
         self.source = source
@@ -228,25 +233,26 @@ class BreadthFirstSearch():
     def findPath(self):
         self.solveBFS()
         reconstructed_path = self.reconstructPath()
-        print('\n')
-        print('algorithm =:','Breadth First Search')
-        print('start =:', self.source)
-        print('end =:', self.sink)
-        print('path =:', reconstructed_path)
+        if self.show:
+            print('\n')
+            print('algorithm =:','Breadth First Search')
+            print('start =:', self.source)
+            print('end =:', self.sink)
+            print('path =:', reconstructed_path)
         return reconstructed_path
 
 if __name__ == "__main__":
-    dijkstra(NODES, EDGES, 5)
+    dijkstra(NODES, EDGES, 5, show=True)
 # algorithm =: Dijkstra's
 # source =: 5
 # path_ways =: {0: [5, 3, 1, 0], 1: [5, 3, 1], 2: [5, 3, 1, 0, 2], 3: [5, 3], 4: [5, 3, 1, 4], 5: [5], 6: [], 7: [], 8: []}
 # prev_nodes=: {0: 1, 1: 3, 2: 0, 3: 5, 4: 1, 5: None, 6: None, 7: None, 8: None}
 # path_lens =: {0: 2.5, 1: 1.5, 2: 4.0, 3: 1.0, 4: 4.0, 5: 0, 6: inf, 7: inf, 8: inf}
-    bellman_ford(NODES, EDGES, 5)
+    bellman_ford(NODES, EDGES, 5, show=True)
 
-    DepthFirstSearch(NODES, EDGES).findComponents()
+    DepthFirstSearch(NODES, EDGES, show=True).findComponents()
 
-    BreadthFirstSearch(NODES, EDGES, 5, 0).findPath()
+    BreadthFirstSearch(NODES, EDGES, 5, 0, show=True).findPath()
 # [
 # [
 # [

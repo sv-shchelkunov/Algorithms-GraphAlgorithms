@@ -1,7 +1,8 @@
 import math
 from graph_algorithms import BreadthFirstSearch as BFS
 
-
+# this DUNGEON map is from https://www.youtube.com/watch?v=09_LlHjoEiY&t=11342s
+# see 48:38 / 6:44:39
 DUNGEON = [
 [0,0,0,1,0,0,0],
 [0,1,0,0,0,1,0],
@@ -15,6 +16,10 @@ def getNxNyEtc(d):
     Nx = len(d[0])
     count = Nx * Ny
     return {'count': count, 'nx': Nx, 'ny': Ny}
+
+def getNodes(d):
+    count, Nx, Ny = getNxNyEtc(d).values()
+    return [v for v in range(count)]
 
 def getXY(cell, d):
     count, Nx, Ny = getNxNyEtc(d).values()
@@ -44,10 +49,10 @@ def getOpenNeighbors(cell, d):
     return [getCell(xy[0], xy[1], d) for xy in availableXY]
 
 def getEdges(d):
-    count, Nx, Ny = getNxNyEtc(d).values()
-    edges = {v: {} for v in range(count)}
+    nodes = getNodes(d)
+    edges = {v: {} for v in nodes}
 
-    for cell in range(count):
+    for cell in nodes:
         x, y = getXY(cell, d)
         if d[y][x] != 0: continue
         for u in getOpenNeighbors(cell, d):
@@ -55,18 +60,19 @@ def getEdges(d):
 
     return edges
 
-def getNodes(d):
-    count, Nx, Ny = getNxNyEtc(d).values()
-    return [v for v in range(count)]
-
 if __name__ == "__main__":
     nodes = getNodes(DUNGEON)
     edges = getEdges(DUNGEON)
     start = getCell(0, 0, DUNGEON)
     end = getCell(3, 4, DUNGEON)
-    esc_path = BFS(nodes, edges, start, end).findPath()
+    esc_path = BFS(nodes, edges, start, end, show=True).findPath()
     esc_pathXY = [getXY(v, DUNGEON) for v in esc_path]
     print('path(x,y) =:', esc_pathXY)
+    # algorithm =: Breadth First Search
+    # start =: 0
+    # end =: 31
+    # path =: [0, 1, 2, 9, 10, 11, 18, 25, 32, 31]
+    # [(0, 0), (1, 0), (2, 0), (2, 1), (3, 1), (4, 1), (4, 2), (4, 3), (4, 4), (3, 4)]
 
     # print(getNxNyEtc(DUNGEON))
     # print(getXY(34, DUNGEON))
